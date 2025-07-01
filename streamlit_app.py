@@ -1,11 +1,10 @@
 import streamlit as st
-from PIL import Image, ImageEnhance
 import subprocess
 import io
 
 st.set_page_config(layout="wide")
 st.title("Image Editor")
-default_image = "theoffice.jpg"
+default_image = "imgs/theoffice.jpg"
 
 with st.sidebar:
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
@@ -22,15 +21,28 @@ st.write(
 )
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+    image = uploaded_file
 else:
-    image = Image.open(default_image)
+    image = default_image
 
-edited_image = image
-subprocess.run(["cppback/imgedit", default_image, "colormask", "out.jpg"])
-edited_image = ImageEnhance.Color(edited_image).enhance(1 - grayscale)
-edited_image = ImageEnhance.Brightness(edited_image).enhance(brightness)
-edited_image = ImageEnhance.Contrast(edited_image).enhance(contrast)
+commands = [
+    ["cppback/imgedit", "convert", "--grayscale", str(grayscale), image, "imgs/temp1.jpg"],
+    ["cppback/imgedit", "convert", "--brightness", str(brightness), "imgs/temp1.jpg", "imgs/temp2.jpg"],
+    ["cppback/imgedit", "convert", "--contrast", str(contrast), "imgs/temp2.jpg", "imgs/out.jpg"],
+]
+
+for cmd in commands:
+    try:
+        result = subprocess.run(
+            cmd,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+    except subprocess.CalledProcessError as e:
+        st.error(f"❌ Failed: {' '.join(cmd)}\nError: {e.stderr}")
+        break  # Stop if any command fails
 
 st.subheader("Edited Image")
-st.image("out.jpg")
+st.image("imgs/out.jpg")

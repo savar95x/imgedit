@@ -18,7 +18,9 @@ struct Image {
 
 	ImageType getFileType(const char* filename);
 
-	Image& grayscale_avg();
+	Image& grayscale_avg(float alpha);
+	Image& brightness(float alpha);
+	Image& contrast(float alpha); // we use linear interpolation
 	Image& grayscale_lum();
 	Image& color_mask(float r, float g, float b);
 };

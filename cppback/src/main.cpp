@@ -1,47 +1,75 @@
 #include "Image.h"
 #include <cstring>
+#include <cstdlib>
 
-enum options { COLORMASK, GRAYSCALE };
+// functionality i want
+// colormask, contrast, grayscale, brightness
+// crop, rotate, steganography
+
+enum operation { CONVERT };
 
 void print_help();
-options getOption(char* arg);
+operation get_operation(char* arg);
+
+void print_help() {
+	printf("Usage: imgedit OPERATION WHATTODO ARGS input output\n");
+	printf("\n");
+	printf("OPERATIONs - convert (only this for now)\n");
+	printf("\n");
+	printf("WHATTODO(convert)\n");
+	printf("--grayscale x(0 to 1) \n");
+	printf("--contrast x(> 0) \n");
+	printf("--brightness x(> 0) \n");
+	printf("--colormask r,g,b(0 to 1) \n");
+	printf("\n");
+	printf("Example usage: imgedit convert --colormask 0.12,0.5,0.3 input.jpg output.jpg\n");
+}
+
+void convert(char* whattodo, char* args, char* input, char* output) {
+	Image img(input);
+	if (strcmp(whattodo, "--grayscale") == 0) {
+		img.grayscale_avg(atof(args));
+	}
+	else if (strcmp(whattodo, "--colormask") == 0) {
+		float colors[3];
+		int i = 0;
+		char* color = strtok(args, ",");
+		while (color != NULL) {
+			char* endptr;
+			colors[i++] = strtof(color, &endptr);
+			color = strtok(NULL, ",");
+		}
+		img.color_mask(colors[0], colors[1], colors[2]);
+	}
+	else if (strcmp(whattodo, "--brightness") == 0) {
+		img.brightness(atof(args));
+	}
+	else if (strcmp(whattodo, "--contrast") == 0) {
+		img.contrast(atof(args));
+	}
+	img.write(output);
+}
+
+operation get_operation(char* arg) {
+	if (strcmp(arg, "convert") == 0) {
+		return CONVERT;
+	}
+	return CONVERT;
+}
 
 int main(int argc, char** argv) {
-	// color_mask test
-	if (argc != 4) {
+	if (strcmp(argv[1], "help") == 0 || strcmp(argv[1], "--help") == 0 || argc != 6) {
 		print_help();
-		return 0;
+		return 1;
 	}
-	char* input = argv[1];
-	options opt = getOption(argv[2]);
-	char* output = argv[3];
-	Image img(input);
-	switch (opt) {
-		case COLORMASK:
-			img.color_mask(0.5, 0.5, 0.5);
-			img.write(output);
-			break;
-		case GRAYSCALE:
-			img.grayscale_avg();
-			img.write(output);
+	operation operation = get_operation(argv[1]);
+	switch (operation) {
+		case CONVERT:
+			convert(argv[2], argv[3], argv[4], argv[5]);
 			break;
 		default:
 			print_help();
 			break;
 	}
 	return 0;
-}
-
-void print_help() {
-	printf("Usage: imgedit input [colormask|grayscale] output\n");
-}
-
-options getOption(char* arg) {
-	if (strcmp(arg, "colormask") == 0) {
-		return COLORMASK;
-	}
-	else if (strcmp(arg, "grayscale") == 0) {
-		return GRAYSCALE;
-	}
-	return GRAYSCALE;
 }

@@ -71,14 +71,20 @@ ImageType Image::getFileType(const char* filename) {
 	return PNG;
 }
 
-Image& Image::grayscale_avg() {
+Image& Image::grayscale_avg(float alpha) {
 	if (channels < 3) {
 		printf("Image is already assumed to be grayscale.\n");
 		return *this;
 	} 
+	if (alpha > 1 || alpha < 0) {
+		printf("--grayscale arg should be between 0.00 and 1.00!\n");
+		return *this;
+	}
 	for (int i = 0; i < size; i += channels) {
-		int col = (data[i] + data[i+1] + data[i+2]) / 3;
-		memset(data+i, col, 3);
+		int avg = (data[i] + data[i+1] + data[i+2]) / 3;
+		memset(data+i+1, (1-alpha)*(*(data+i+1))+(alpha)*(avg), 1);
+		memset(data+i+2, (1-alpha)*(*(data+i+2))+(alpha)*(avg), 1);
+		memset(data+i+3, (1-alpha)*(*(data+i+3))+(alpha)*(avg), 1);
 	}
 	return *this;
 }
@@ -108,6 +114,34 @@ Image& Image::color_mask(float r, float g, float b) {
 		data[i] *= r;
 		data[i+1] *= g;
 		data[i+2] *= b;
+	}
+	return *this;
+}
+
+Image& Image::brightness(float alpha) {
+	if (alpha < 0) {
+		printf("--brightness arg should be positive!\n");
+		return *this;
+	}
+	for (int i = 0; i < size; i++) {
+		int bright = (alpha)*(*(data+i));
+		if (bright > 255) bright = 255;
+		memset(data+i, bright, 1);
+	}
+	return *this;
+}
+
+Image& Image::contrast(float alpha) {
+	if (alpha < 0) {
+		printf("--contrast arg should be positive!\n");
+		return *this;
+	}
+	for (int i = 0; i < size; i++) {
+		uint8_t mean = 128;
+		int value = (alpha)*(*(data+i) - mean) + mean; // linear interpolation
+		if (value > 255) value = 255;
+		if (value < 0) value = 0;
+		memset(data+i, value, 1);
 	}
 	return *this;
 }
