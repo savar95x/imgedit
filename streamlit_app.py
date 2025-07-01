@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image, ImageEnhance
+import subprocess
 import io
 
 st.set_page_config(layout="wide")
@@ -26,9 +27,10 @@ else:
     image = Image.open(default_image)
 
 edited_image = image
+subprocess.run(["cppback/imgedit", default_image, "colormask", "out.jpg"])
 edited_image = ImageEnhance.Color(edited_image).enhance(1 - grayscale)
 edited_image = ImageEnhance.Brightness(edited_image).enhance(brightness)
 edited_image = ImageEnhance.Contrast(edited_image).enhance(contrast)
 
 st.subheader("Edited Image")
-st.image(edited_image)
+st.image("out.jpg")

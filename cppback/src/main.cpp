@@ -32,7 +32,9 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void print_help() { printf("Usage: imgedit input [colormask|grayscale] output\n"); }
+void print_help() {
+	printf("Usage: imgedit input [colormask|grayscale] output\n");
+}
 
 options getOption(char* arg) {
 	if (strcmp(arg, "colormask") == 0) {
