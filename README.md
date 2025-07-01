@@ -6,8 +6,9 @@ More features to be added soon.
 It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
 
 ![](imgs/demo.png)  
-<img width=49% src=imgs/berries.jpg />
-<img width=49% src=imgs/out.jpg />
+
+<img width=50% src=imgs/berries.jpg />
+<img width=50% src=imgs/out.jpg />
 
 ## todo
 - [ ] make a better front end
