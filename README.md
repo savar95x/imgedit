@@ -16,7 +16,7 @@ It is intended to be used as a command line application, but there is a live dem
 ## todo
 - [ ] make a better front end
 - [ ] add crop, rotate, steganography, gamma, sepia, hue etc
-- [ ] find an elegant way to write cli apps
+- [ ] find an elegant way to write cli apps (maybe even taking multiple arguments)
 
 For now the backend on the webapp is opencv python, but I plan to soon change it to self-written cpp.  
 I also plan on adding crop.  

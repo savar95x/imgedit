@@ -4,7 +4,7 @@ import io
 
 st.set_page_config(layout="wide")
 st.title("Image Editor")
-default_image = "imgs/theoffice.jpg"
+default_image = "imgs/berries.jpg"
 
 with st.sidebar:
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
