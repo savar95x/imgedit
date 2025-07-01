@@ -7,8 +7,11 @@ It is intended to be used as a command line application, but there is a live dem
 
 ![](imgs/demo.png)  
 
-<img width=50% src=imgs/berries.jpg />
-<img width=50% src=imgs/out.jpg />
+### original and edited imgs
+<div align=center>
+<img width=49% src=imgs/berries.jpg />
+<img width=49% src=imgs/out.jpg />
+</div>
 
 ## todo
 - [ ] make a better front end
