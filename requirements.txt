@@ -1,2 +1,1 @@
 streamlit
-streamlit-image-comparison==0.0.4
