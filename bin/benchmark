@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Number of runs
+runs=10
+total_time=0
+cmd="./imgedit --grayscale=0.5 ../imgs/in.png ../imgs/out.png"
+
+for i in $(seq 1 $runs); do
+	# Measure real time (wall clock time) in seconds
+	runtime=$( { time -p $cmd >/dev/null 2>&1; } 2>&1 | grep real | awk '{print $2}')
+	total_time=$(echo "$total_time + $runtime" | bc)
+	echo "Run $i: $runtime seconds"
+done
+
+average=$(echo "scale=4; $total_time / $runs" | bc)
+echo "Average runtime over $runs runs: $average seconds"
