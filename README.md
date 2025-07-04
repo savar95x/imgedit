@@ -20,20 +20,10 @@ Example usage
 bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
 ```
 
-![demo](imgs/demo.mp4)  
-
 ![demo](imgs/demo.gif)  
 
-![demo](imgs/demo.png)  
-
-<video width="640" height="360" controls>
-  <source src="video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-
-
-note: It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
+### note
+It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
 
 ## todo
 - [ ] add crop, rotate, steganography, gamma, sepia, hue etc
