@@ -13,14 +13,16 @@ A command line image editor.
 ## usage
 considering you're in the root of this repo
 ```bash
-bin/imgedit OPTION=ARG\(S\) INPUT OUTPUT
+bin/imgedit OPTION=ARG(S) INPUT OUTPUT
 ```
 Example usage
 ```bash
-bin/imgedit OPTION=ARG\(S\) INPUT OUTPUT
+bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
 ```
 
 ![demo](imgs/demo.mp4)  
+
+![demo](imgs/demo.png)  
 
 <video width="640" height="360" controls>
   <source src="video.mp4" type="video/mp4">
