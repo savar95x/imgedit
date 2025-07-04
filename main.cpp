@@ -22,7 +22,7 @@ float clamp(float low, float a, float high) {
 }
 
 void print_help() {
-	printf("Usage: ./imed OPTIONS INPUT OUTPUT\n");
+	printf("Usage: ./imgedit OPTIONS INPUT OUTPUT\n");
 	printf("\n");
 	printf("OPTIONS\n");
 	printf("--grayscale=alpha	alpha being the extent of grayscale, 0.00 to 1.00\n");
@@ -31,7 +31,7 @@ void print_help() {
 	printf("--colormask=r,g,b	r, b, g belonging in 0.00 to 1.00\n");
 	printf("\n");
 	printf("EXAMPLE USAGE\n");
-	printf("./imed --grayscale=0.83 input.png output.png\n");
+	printf("./imgedit --grayscale=0.83 input.png output.png\n");
 }
 
 void grayscale(float alpha, char *input, char *output) {

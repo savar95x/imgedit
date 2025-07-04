@@ -1,23 +1,37 @@
 # imgedit
-A command line image editor with features like grayscale, contrast, brightness, colormask.  
-More features to be added soon.  
+A command line image editor.  
+(Re)written using the png++ library (earlier i used the stb_image header which was noticeably slower).  
+
+## features
+- implemented concurrency using std::threads, a 64% performance boost compared to sequential execution  
+- uses the efficient png++ library which uses libpng  
+- signigicantly faster than ImageMagick  
+
+### drawbacks
+- only supports png for now  
 
 ## usage
-It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
+considering you're in the root of this repo
+```bash
+bin/imgedit OPTION=ARG\(S\) INPUT OUTPUT
+```
+Example usage
+```bash
+bin/imgedit OPTION=ARG\(S\) INPUT OUTPUT
+```
 
-![](imgs/demo.png)  
+![demo](imgs/demo.mp4)  
 
-### original and edited imgs
-<div align=center>
-<img width=49% src=imgs/berries.jpg />
-<img width=49% src=imgs/out.jpg />
-</div>
+<video width="640" height="360" controls>
+  <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+
+note: It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
 
 ## todo
-- [ ] make a better front end (or make streamlit work)
 - [ ] add crop, rotate, steganography, gamma, sepia, hue etc
-- [ ] find an elegant way to write cli apps (maybe even taking multiple arguments)
-- [ ] comparisons with opencv python
-
-For now the backend on the webapp is opencv python, but I plan to soon change it to self-written cpp.  
-I also plan on adding crop.  
+- [ ] implement concurrency in all the functions
+- [ ] make a better front end (or make streamlit work)
