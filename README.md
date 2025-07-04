@@ -22,6 +22,8 @@ bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
 
 ![demo](imgs/demo.mp4)  
 
+![demo](imgs/demo.gif)  
+
 ![demo](imgs/demo.png)  
 
 <video width="640" height="360" controls>
