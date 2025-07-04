@@ -26,9 +26,9 @@ else:
     image = default_image
 
 commands = [
-    ["cppback/imgedit", "convert", "--grayscale", str(grayscale), image, "imgs/temp1.jpg"],
-    ["cppback/imgedit", "convert", "--brightness", str(brightness), "imgs/temp1.jpg", "imgs/temp2.jpg"],
-    ["cppback/imgedit", "convert", "--contrast", str(contrast), "imgs/temp2.jpg", "imgs/out.jpg"],
+    ["bin/imgedit", "convert", "--grayscale", str(grayscale), image, "imgs/temp1.jpg"],
+    ["bin/imgedit", "convert", "--brightness", str(brightness), "imgs/temp1.jpg", "imgs/temp2.jpg"],
+    ["bin/imgedit", "convert", "--contrast", str(contrast), "imgs/temp2.jpg", "imgs/out.jpg"],
 ]
 
 for cmd in commands:
