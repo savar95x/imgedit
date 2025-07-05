@@ -4,11 +4,18 @@ A command line image editor.
 
 ## features
 - implemented concurrency using std::threads, a 64% performance boost compared to sequential execution  
-- uses the efficient png++ library which uses libpng  
+- uses the efficient png++ library built on the official libpng library  
 - signigicantly faster than ImageMagick  
 
 ### drawbacks
-- only supports png for now  
+- only supports 3 channel (rgb) PNGs for now  
+
+## installation
+```bash
+git clone https://github.com/savar95x/imgedit
+cd imgedit
+./compile
+```
 
 ## usage
 considering you're in the root of this repo
