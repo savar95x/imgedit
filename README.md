@@ -29,6 +29,6 @@ It is intended to be used as a command line application, but there is a live dem
 - [ ] add crop, rotate, steganography, gamma, sepia, hue etc
 - [ ] implement concurrency in all the functions
 - [ ] make a better front end (or make streamlit work)
-- [ ] error handling (less arguements, invalid file input)
+- [ ] error handling (less arguements, invalid file input, out of range arguments)
 - [ ] strtok_r?
 - [ ] thread safety (lifetime of masks)
