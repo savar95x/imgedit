@@ -13,7 +13,7 @@ A command line image editor.
 ## usage
 considering you're in the root of this repo
 ```bash
-bin/imgedit OPTION=ARG(S) INPUT OUTPUT
+bin/imgedit OPTION=ARGs INPUT OUTPUT
 ```
 Example usage
 ```bash
