@@ -26,7 +26,7 @@ bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
 It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
 
 ## todo
-- [ ] add crop, rotate, steganography, gamma, sepia, hue etc
+- [ ] add rotate, steganography, gamma, sepia, hue
 - [ ] implement concurrency in all the functions
 - [ ] make a better front end (or make streamlit work)
 - [ ] error handling (less arguements, invalid file input, out of range arguments)
