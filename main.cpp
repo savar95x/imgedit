@@ -9,6 +9,8 @@
 #include <vector>
 #include <algorithm>
 
+#define DELIM "x,"
+
 bool check_option(char *option) {
 	if (strcmp(option, "--grayscale") == 0 || strcmp(option, "--contrast") == 0 || strcmp(option, "--brightness") == 0 || strcmp(option, "--colormask") == 0 || strcmp(option, "--sepia") == 0 || strcmp(option, "--saturate") == 0)
 		return true;
@@ -25,7 +27,7 @@ void print_help() {
 	printf("Usage: ./imgedit OPTIONS[=ARGs] INPUT [OUTPUT]\n");
 	printf("\n");
 	printf("OPTIONS\n");
-	printf("--info                  width x height\n");
+	printf("--info                  output width x height\n");
 	printf("\n");
 	printf("--grayscale=x           mathematical average of RGB. x being the extent, in 0.00 to 1.00\n");
 	printf("--saturate=x            x > 0.00. x=0 -> grayscale (luma average), x=1 -> original image, x>1 -> oversaturate\n");
@@ -34,10 +36,13 @@ void print_help() {
 	printf("--sepia=x               x in 0.00 to 1.00\n");
 	printf("--colormask=r,g,b       r, b, g in 0.00 to 1.00\n");
 	printf("\n");
-	printf("--crop=x,y:x,y          top_left and bottom_right points\n");
+	printf("--crop=YxX,YxX          top_left and bottom_right points\n");
+	printf("--rotate=deg            degrees to rotate\n");
 	printf("\n");
 	printf("EXAMPLE USAGE\n");
 	printf("./imgedit --grayscale=0.83 input.png output.png\n");
+	printf("./imgedit --crop=100x100,1920x1200 input.png output.png\n");
+	printf("./imgedit --rotate=100x100,60 input.png output.png\n");
 	printf("./imgedit --info input.png\n");
 }
 
@@ -159,13 +164,14 @@ void execute_option(char *option, char *args, char *input, char *output) {
 }
 
 void crop(char *args, char *input, char *output) {
+	// --crop=100x100,1920x1080
 	uint8_t i = 0;
-	char *token = strtok(args, "x:");
+	char *token = strtok(args, DELIM);
 	long positions[4];
 	while (token != NULL) {
 		char* endptr;
 		positions[i++] = strtol(token, &endptr, 10);
-		token = strtok(NULL, "x:");
+		token = strtok(NULL, DELIM);
 	}
 	png::image<png::rgb_pixel> image(input);
 	int start_y = positions[0];
@@ -179,6 +185,14 @@ void crop(char *args, char *input, char *output) {
 		}
 	}
 	cropped.write(output);
+}
+
+void rotate(char *args, char *input, char *output) {
+	// --rotate=100x100,60
+	uint16_t deg = atoi(args);
+	png::image<png::rgb_pixel> image(input);
+	int width = image.get_width();
+	int height = image.get_height();
 }
 
 void info(char *input) {
@@ -199,6 +213,8 @@ int main(int argc, char **argv) {
 		info(argv[2]);
 	} else if (strcmp(option, "--crop") == 0) {
 		crop(args, argv[2], argv[3]);
+	//} else if (strcmp(option, "--rotate") == 0) {
+		//rotate(args, argv[2], argv[3]);
 	} else {
 		print_help();
 	}
