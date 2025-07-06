@@ -1,4 +1,5 @@
 #!/bin/sh
 g++ -c main.cpp `libpng-config --cflags`
+mkdir -p bin/
 g++ -o bin/imgedit main.o `libpng-config --ldflags`
 rm main.o
