@@ -39,4 +39,4 @@ It is intended to be used as a command line application, but there is a live dem
 - [ ] strtok_r?
 - [ ] thread safety (lifetime of masks)
 - [ ] rewrite using libpng eventually?
-- [ ] hdr? also how does google image update the image real time (ans: applied on low res previews, gpu accelerated, start processing with what is visible on screen)
+- [ ] hdr? also how does google image update the image real time (ans: applied on low res previews, gpu accelerated, start processing with what is visible on screen, output directly to screen (ram) instead of writing to disk)
