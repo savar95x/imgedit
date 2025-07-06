@@ -1,8 +1,12 @@
-# imgedit
+# Imgedit
 A command line image editor.  
-(Re)written using the png++ library (earlier i used the stb_image header which was noticeably slower).  
+
+## Overview
+I wanted to write good cpp code, so I thought to make one project completely from scratch. Pixel manipulations and image processing always fascinated me, so I thought to myself, why not make an Image Editor.  
+I wanted to start small, so I only made a cli application
 
 ## features
+(Re)written using the png++ library (earlier i used the stb_image header which was noticeably slower).  
 - implemented concurrency using std::threads, a 64% performance boost compared to sequential execution  
 - uses the efficient png++ library built on the official libpng library  
 - signigicantly faster than ImageMagick  
