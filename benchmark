@@ -3,7 +3,7 @@
 # Number of runs
 runs=10
 total_time=0
-cmd="bin/imgedit --colormask=0.5,0.9,0.1 imgs/in.png imgs/out.png"
+cmd="bin/imgedit --gamma=1 imgs/in.png imgs/out.png"
 
 for i in $(seq 1 $runs); do
 	# Measure real time (wall clock time) in seconds

@@ -33,9 +33,10 @@ bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
 It is intended to be used as a command line application, but there is a live demo on [streamlit](https://imgedit-savar.streamlit.app). Though I discourage testing it out because of compile time differences of the imgedit binary.  
 
 ## todo
-- [ ] add rotate, steganography, gamma, sepia, hue
-- [ ] implement concurrency in all the functions
-- [ ] make a better front end (or make streamlit work)
+- [ ] add rotate, steganography, gamma, hue
 - [ ] error handling (less arguements, invalid file input, out of range arguments)
+- [ ] make a better front end (or make streamlit work)
 - [ ] strtok_r?
 - [ ] thread safety (lifetime of masks)
+- [ ] rewrite using libpng eventually?
+- [ ] hdr? also how does google image update the image real time (ans: applied on low res previews, gpu accelerated, start processing with what is visible on screen)
