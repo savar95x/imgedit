@@ -26,7 +26,7 @@ bin/imgedit OPTION[=ARGs] INPUT [OUTPUT]
 ```
 Example usage
 ```bash
-bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
+bin/imgedit --colormask=0.8,0.5,0.9 imgs/in.png imgs/out.png
 ```
 <div align="center">
 
