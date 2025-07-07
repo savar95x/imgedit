@@ -30,7 +30,7 @@ bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 ```
 <div align="center">
 
-| Original | Edited |
+| imgs/in.png | imgs/out.png |
 |----------|--------|
 | <img width="95%" src="imgs/in.png" /> | <img width="95%" src="imgs/out.png" /> |
 
