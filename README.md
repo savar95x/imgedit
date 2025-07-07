@@ -33,6 +33,7 @@ bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 <img width=49% src=imgs/out.png />
 </div>
 
+### A complete demo (too long, need to truncate)
 ![demo](imgs/demo.gif)  
 
 
