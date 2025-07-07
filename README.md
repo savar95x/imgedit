@@ -29,13 +29,13 @@ Example usage
 bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 ```
 <div align="center">
-  <div style="display: inline-block;">
+  <div width="40%" style="display: inline-block; margin: 0 5px;">
     <img width="49%" src="imgs/in.png" />
-    <span align="center"><em>Original</em></span>
+    <div align="center"><em>Original</em></div>
   </div>
-  <div style="display: inline-block;">
+  <div width="40%" style="display: inline-block; margin: 0 5px;">
     <img width="49%" src="imgs/out.png" />
-    <span align="center"><em>Edited</em></span>
+    <div align="center"><em>Edited</em></div>
   </div>
 </div>
 
