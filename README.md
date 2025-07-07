@@ -48,10 +48,10 @@ Overall this was a fun learning experience, and as much as I want to make a real
 
 ## Todo
 - [ ] implement a function to parse rgb(a)
-- [ ] add rotate, steganography, gamma, hue
 - [ ] error handling (less arguements, invalid file input, out of range arguments)
+- [ ] add rotate, steganography, gamma, hue
 - [ ] add the ability to make parse multiple options at once
-- [ ] someday make a react frontend?
 - [ ] rewrite using libpng eventually?
-- [ ] hdr? also how does google image update the image real time (ans: applied on low res previews, gpu accelerated, start processing with what is visible on screen, output directly to screen (ram) instead of writing to disk)
 - [ ] eventually add support for other common image types (jp(e)g, gif)
+- [ ] someday make a react frontend? maybe once all the quality of life things are done. could be a separate project as well.
+- [ ] hdr? also how does google image update the image real time (ans: applied on low res previews, gpu accelerated, start processing with what is visible on screen, output directly to screen (ram) instead of writing to disk)
