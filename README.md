@@ -33,8 +33,8 @@ bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 <img width=49% src=imgs/out.png />
 </div>
 <div align=center>
-<span width=49% > okkk </span>
-<span width=49% > okkk </span>
+<span width=49% > Original </span>
+<span width=49% > Edited </span>
 </div>
 
 ### A complete demo (too long, need to truncate)
