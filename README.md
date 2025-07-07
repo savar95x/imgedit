@@ -26,8 +26,12 @@ bin/imgedit OPTION[=ARGs] INPUT [OUTPUT]
 ```
 Example usage
 ```bash
-bin/imgedit --grayscale=0.9 imgs/in.png imgs/output.png
+bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 ```
+<div align=center>
+<img width=49% src=imgs/in.png />
+<img width=49% src=imgs/out.png />
+</div>
 
 ![demo](imgs/demo.gif)  
 
