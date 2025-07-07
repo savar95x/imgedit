@@ -29,8 +29,14 @@ Example usage
 bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 ```
 <div align=center>
+<span>
 <img width=49% src=imgs/in.png />
+kaa
+</span>
+<span>
 <img width=49% src=imgs/out.png />
+okaka
+</span>
 </div>
 
 ### A complete demo (too long, need to truncate)
