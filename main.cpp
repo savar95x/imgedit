@@ -13,6 +13,11 @@
 
 #define DELIM "x,"
 
+bool check_rgba(char *input) {
+	png::image<png::rgb_pixel> image(input);
+}
+
+
 bool check_option(char *option) {
 	if (strcmp(option, "--grayscale") == 0 || strcmp(option, "--contrast") == 0 || strcmp(option, "--brightness") == 0 || strcmp(option, "--colormask") == 0 || strcmp(option, "--sepia") == 0 || strcmp(option, "--saturate") == 0)
 		return true;
@@ -118,27 +123,15 @@ void sepia_worker(png::image<png::rgb_pixel> &image, float alpha, int start_row,
 	}
 }
 
-void execute_option(char *option, char *args, char *input, char *output) {
-	// file locking for no overlapping while reading the same image multiple times in a benchmark
-	std::vector<unsigned char> buffer;
-	{
-		std::ifstream file(input, std::ios::binary);
-		file.seekg(0, std::ios::end);
-		buffer.resize(file.tellg());
-		file.seekg(0, std::ios::beg);
-		file.read(reinterpret_cast<char*>(buffer.data()), buffer.size());
-	}
-
-	std::istringstream iss(std::string(buffer.begin(), buffer.end()));
-	png::image<png::rgb_pixel> image;
-	image.read_stream(iss);  // Now safe for multiple processes
-
+void execute_option(char *option, char *args, png::image<png::rgb_pixel> &image, char *output) {
+	// theading
 	unsigned int n = std::thread::hardware_concurrency();
 	if (n == 0) n = 4; // n is the number of threads
 	unsigned int h = image.get_height();
 	int rpt = h / n; // rows per thread
 	std::vector<std::thread> threads;
 
+	// MAYBE MAKE A HASHMAP LATER TO MAKE THE CODE MORE READABLE?
 	if (strcmp(option, "--grayscale") == 0) {
 		for (int i = 0; i < n; i++)
 			threads.push_back(std::thread(&grayscale_worker, std::ref(image), atof(args), i*rpt, (i == n-1) ? h : (i+1)*rpt));
@@ -176,7 +169,7 @@ void execute_option(char *option, char *args, char *input, char *output) {
 	image.write(output);
 }
 
-void crop(char *args, char *input, char *output) {
+void crop(char *args, png::image<png::rgb_pixel> &image, char *output) {
 	// --crop=100x100,1920x1080
 	uint8_t i = 0;
 	char *token = strtok(args, DELIM);
@@ -186,11 +179,12 @@ void crop(char *args, char *input, char *output) {
 		positions[i++] = strtol(token, &endptr, 10);
 		token = strtok(NULL, DELIM);
 	}
-	png::image<png::rgb_pixel> image(input);
+
 	int start_y = positions[0];
 	int start_x = positions[1];
 	int width = positions[2] - positions[0];
 	int height = positions[3] - positions[1];
+
 	png::image<png::rgb_pixel> cropped(width, height);
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
@@ -200,16 +194,14 @@ void crop(char *args, char *input, char *output) {
 	cropped.write(output);
 }
 
-void rotate(char *args, char *input, char *output) {
-	// --rotate=100x100,60
+void rotate(char *args, png::image<png::rgb_pixel> &image, char *output) {
+	// --rotate=60
 	uint16_t deg = atoi(args);
-	png::image<png::rgb_pixel> image(input);
 	int width = image.get_width();
 	int height = image.get_height();
 }
 
-void info(char *input) {
-	png::image<png::rgb_pixel> image(input);
+void info(png::image<png::rgb_pixel> &image) {
 	printf("%dx%d\n", image.get_width(), image.get_height());
 }
 
@@ -220,12 +212,28 @@ int main(int argc, char **argv) {
 	}
 	char *option = strtok(argv[1], "=");
 	char *args = strtok(NULL, "=");
+
+	// loading into memory
+	// also, ADD TO CHECK IF THE FILE EXISTS, IF NOT, std::cerr and return 0
+	std::vector<unsigned char> buffer;
+	{
+		std::ifstream file(argv[2], std::ios::binary);
+		file.seekg(0, std::ios::end);
+		buffer.resize(file.tellg());
+		file.seekg(0, std::ios::beg);
+		file.read(reinterpret_cast<char*>(buffer.data()), buffer.size());
+	} // file closes after this
+
+	std::istringstream iss(std::string(buffer.begin(), buffer.end()));
+	png::image<png::rgb_pixel> image;
+	image.read_stream(iss);  // safe for multiple processes
+
 	if (check_option(option)) {
-		execute_option(option, args, argv[2], argv[3]);
+		execute_option(option, args, std::ref(image), argv[3]);
 	} else if (strcmp(option, "--info") == 0) {
-		info(argv[2]);
+		info(std::ref(image));
 	} else if (strcmp(option, "--crop") == 0) {
-		crop(args, argv[2], argv[3]);
+		crop(args, std::ref(image), argv[3]);
 	//} else if (strcmp(option, "--rotate") == 0) {
 		//rotate(args, argv[2], argv[3]);
 	} else {

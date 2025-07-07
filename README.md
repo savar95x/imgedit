@@ -20,11 +20,10 @@ cd imgedit
 ```
 
 ## Usage
-Considering you're in the root of this repo
 ```bash
 bin/imgedit OPTION[=ARGs] INPUT [OUTPUT]
 ```
-Example usage
+Example usage (considering you're in the root of this repo)  
 ```bash
 bin/imgedit --colormask=0.8,0.5,0.9 imgs/in.png imgs/out.png
 ```
@@ -40,7 +39,7 @@ bin/imgedit --colormask=0.8,0.5,0.9 imgs/in.png imgs/out.png
 ![demo](imgs/demo.gif)  
 
 
-# Experience
+## Experience
 I had first written this app using the stb_image header file, and even tho it supported five image file types, it was in practice not very fast. So I rewrote it from scratch using the png++ library, which is honestly significantly faster.  
 I also divided the functions in a coupled way so that there's one monolithic function to launch worker (thread) functions correspoding to different flags, to make the codebase smaller and easier to read.  
 Also, I am loading a copy of the input file into memory and then passing it to png::image, rather than reading directly. This is to make sure there are no reading conflict between multiple simultanious instances of the application (otherwise the image did not open completely with image(input) in most of the iterations while benchmarking)  
