@@ -28,13 +28,15 @@ Example usage
 ```bash
 bin/imgedit --colormask=0.8,0.5,0,8 imgs/in.png imgs/out.png
 ```
-<div align=center>
-<img width=49% src=imgs/in.png />
-<img width=49% src=imgs/out.png />
-</div>
-<div align=center>
-<span width=49% > Original </span>
-<span width=49% > Edited </span>
+<div align="center">
+  <div style="display: inline-block; margin: 0 5px;">
+    <img width="49%" src="imgs/in.png" />
+    <div align="center"><em>Original</em></div>
+  </div>
+  <div style="display: inline-block; margin: 0 5px;">
+    <img width="49%" src="imgs/out.png" />
+    <div align="center"><em>Edited</em></div>
+  </div>
 </div>
 
 ### A complete demo (too long, need to truncate)
