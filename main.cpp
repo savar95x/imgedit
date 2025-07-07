@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include <fstream>
+#include <sstream>  // Required for std::istringstream
 //#include <inttypes.h>
 #include <cmath>
 #include <cstdio>
@@ -42,7 +44,6 @@ void print_help() {
 	printf("EXAMPLE USAGE\n");
 	printf("./imgedit --grayscale=0.83 input.png output.png\n");
 	printf("./imgedit --crop=100x100,1920x1200 input.png output.png\n");
-	printf("./imgedit --rotate=100x100,60 input.png output.png\n");
 	printf("./imgedit --info input.png\n");
 }
 
@@ -118,7 +119,20 @@ void sepia_worker(png::image<png::rgb_pixel> &image, float alpha, int start_row,
 }
 
 void execute_option(char *option, char *args, char *input, char *output) {
-	png::image<png::rgb_pixel> image(input);
+	// file locking for no overlapping while reading the same image multiple times in a benchmark
+	std::vector<unsigned char> buffer;
+	{
+		std::ifstream file(input, std::ios::binary);
+		file.seekg(0, std::ios::end);
+		buffer.resize(file.tellg());
+		file.seekg(0, std::ios::beg);
+		file.read(reinterpret_cast<char*>(buffer.data()), buffer.size());
+	}
+
+	std::istringstream iss(std::string(buffer.begin(), buffer.end()));
+	png::image<png::rgb_pixel> image;
+	image.read_stream(iss);  // Now safe for multiple processes
+
 	unsigned int n = std::thread::hardware_concurrency();
 	if (n == 0) n = 4; // n is the number of threads
 	unsigned int h = image.get_height();
@@ -138,16 +152,15 @@ void execute_option(char *option, char *args, char *input, char *output) {
 			threads.push_back(std::thread(&brightness_worker, std::ref(image), atof(args), i*rpt, (i == n-1) ? h : (i+1)*rpt));
 	}
 	else if (strcmp(option, "--colormask") == 0) {
+		uint8_t j = 0;
+		char *saveptr;
+		char *token = strtok_r(args, ",", &saveptr);
+		float masks[3];
+		while (token != NULL) {
+			masks[j++] = atof(token);
+			token = strtok_r(NULL, ",", &saveptr);
+		}
 		for (int i = 0; i < n; i++) {
-			// for some weird reason, parsing args for each thread is faster than parsing once for every thread
-			// :(
-			uint8_t j = 0;
-			char *mask = strtok(args, ",");
-			float *masks = new float[3];
-			while (mask != NULL) {
-				char* endptr; masks[j++] = strtof(mask, &endptr);
-				mask = strtok(NULL, ",");
-			}
 			threads.push_back(std::thread(&colormask_worker, std::ref(image), masks, i*rpt, (i == n-1) ? h : (i+1)*rpt));
 		}
 	}
